@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "automatizacion-sri-iva"
+version = "0.1.0"
+description = "App para automatizar la declaración del iva en el sri usando selenium"
+authors = ["luisprgr"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+selenium = "^4.7.2"
+
+[tool.poetry.group.dev.dependencies]
+flake8 = "^6.0.0"
+autopep8 = "^2.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

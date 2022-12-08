@@ -1,0 +1,11 @@
+{   
+    "url_declaraciones": "https://srienlinea.sri.gob.ec/tuportal-internet/accederAplicacion.jspa?redireccion=310&idGrupo=201",
+    "tiempo_espera_segundos": 3,
+    "ruc": "",
+    "password": "",
+    "casillas": {
+        "405": "0.0",
+        "408": "0.0",
+        "409": "1.0",
+    }
+}

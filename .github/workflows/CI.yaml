@@ -1,0 +1,93 @@
+name: Linters and CodeQL
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  Install-Dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: workaround for poetry failing to install dependencies
+        run: |
+          sudo apt install gnome-keyring
+
+      - name: Install Poetry
+        run: pip install poetry
+
+      - name: Restore poetry venv cache
+        id: dependencies-cache
+        uses: actions/cache@v3
+        with:
+          path: .venv
+          key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
+
+      - name: Install dependencies
+        if: steps.dependencies-cache.outputs.cache-hit != 'true'
+        run: poetry install
+
+  Linters:
+    runs-on: ubuntu-latest
+    needs: Install-Dependencies
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: workaround for poetry failing to install dependencies
+        run: |
+          sudo apt install gnome-keyring
+
+      - name: Install Poetry
+        run: pip install poetry
+
+      - name: Restore poetry venv cache
+        uses: actions/cache@v3
+        with:
+          path: .venv
+          key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
+
+      - name: Linters
+        run: poetry run flake8 main.py src
+
+  CodeQL:
+    runs-on: ubuntu-latest
+    needs: [Install-Dependencies, Linters]
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: workaround for poetry failing to install dependencies
+        run: |
+          sudo apt install gnome-keyring
+
+      - name: Install Poetry
+        run: pip install poetry
+
+      - name: Restore poetry venv cache
+        uses: actions/cache@v3
+        with:
+          path: .venv
+          key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: python
+          setup-python-dependencies: false
+          queries: security-and-quality, security-extended
+        
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2

@@ -1,0 +1,9 @@
+.vscode/
+.venv/
+venv/
+screenshots/
+capturas/
+user_data.json
+geckodriver.log
+datos.json
+__pycache__/
