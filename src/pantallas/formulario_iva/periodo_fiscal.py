@@ -2,7 +2,10 @@ import time
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as expected
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import ElementNotInteractableException, NoSuchElementException
+from selenium.common.exceptions import (
+    ElementNotInteractableException,
+    NoSuchElementException
+)
 
 from src.utilidades.utilidades import hover_and_click, guardar_captura
 
@@ -33,10 +36,16 @@ def seleccionar_periodo_fiscal(
     time.sleep(tiempo_espera)
 
     wait.until(expected.visibility_of_element_located(
-        (By.XPATH, "//div[@id='frmFlujoDeclaracion:dialogoMensajesPersonalizados']//button[contains(@id, 'frmFlujoDeclaracion')]")))
+        (By.XPATH,
+         (
+             "//div[@id='frmFlujoDeclaracion:dialogoMensajesPersonalizados']"
+             "//button[contains(@id, 'frmFlujoDeclaracion')]"
+         ))))
 
     rimpe_discard_button = driver.find_element(
-        By.XPATH, "// div[@id='frmFlujoDeclaracion:dialogoMensajesPersonalizados']//button[contains(@id, 'frmFlujoDeclaracion')]")
+        By.XPATH,
+        ("// div[@id='frmFlujoDeclaracion:dialogoMensajesPersonalizados']"
+         "//button[contains(@id, 'frmFlujoDeclaracion')]"))
     rimpe_discard_button.click()
 
     wait.until(expected.presence_of_element_located(
