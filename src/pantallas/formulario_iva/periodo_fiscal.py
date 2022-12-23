@@ -67,7 +67,7 @@ def seleccionar_periodo_fiscal(
 
     try:
         discard_draft_button = driver.find_element(
-            by=By.ID, value='frmFlujoDeclaracion:j_idt118')
+            by=By.XPATH, value="//button/span[contains(text(), 'Rechazar')]")
         discard_draft_button.click()
     except ElementNotInteractableException:
         pass
