@@ -21,7 +21,7 @@ def hover_and_click(driver, button_id):
 
 def scroll_to_bottom(
     driver,
-    element_at_bottom_id='frmFlujoDeclaracion:j_idt506'
+    element_at_bottom_id='frmFlujoDeclaracion:btnFormularioSiguiente'
 ):
     element_at_bottom = driver.find_element(
         by=By.ID, value=element_at_bottom_id)
