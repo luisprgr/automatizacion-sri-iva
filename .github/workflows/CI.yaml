@@ -92,7 +92,7 @@ jobs:
 
   CodeQL:
     runs-on: ubuntu-latest
-    needs: [Install-Dependencies, Linters]
+    needs: [Install-Dependencies, Linter, Formatter]
     permissions:
       actions: read
       contents: read
