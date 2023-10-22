@@ -16,6 +16,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.12' 
+
       - name: workaround for poetry failing to install dependencies
         run: |
           sudo apt install gnome-keyring
@@ -29,8 +33,6 @@ jobs:
         with:
           path: .venv
           key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
 
       - name: Install dependencies
         if: steps.dependencies-cache.outputs.cache-hit != 'true'
@@ -41,6 +43,10 @@ jobs:
     needs: Install-Dependencies
     steps:
       - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
 
       - name: workaround for poetry failing to install dependencies
         run: |
@@ -68,6 +74,10 @@ jobs:
     
     steps:
       - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
 
       - name: workaround for poetry failing to install dependencies
         run: |
