@@ -7,13 +7,21 @@ license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.10"
-selenium = "^4.7.2"
+python = "^3.12"
+selenium = "^4.14.0"
 
 [tool.poetry.group.dev.dependencies]
-flake8 = "^6.0.0"
-autopep8 = "^2.0.0"
+ruff = "^0.1.1"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+select = ["ALL"]
+
+fixable = ["ALL"]
+unfixable = []
+
+line-length = 90
+target-version = "py312"

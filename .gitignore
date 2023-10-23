@@ -7,3 +7,4 @@ user_data.json
 geckodriver.log
 datos.json
 __pycache__/
+.ruff_cache/

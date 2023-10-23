@@ -16,9 +16,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: workaround for poetry failing to install dependencies
-        run: |
-          sudo apt install gnome-keyring
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.12' 
 
       - name: Install Poetry
         run: pip install poetry
@@ -29,22 +29,20 @@ jobs:
         with:
           path: .venv
           key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
 
       - name: Install dependencies
         if: steps.dependencies-cache.outputs.cache-hit != 'true'
         run: poetry install
 
-  Linters:
+  Linter:
     runs-on: ubuntu-latest
     needs: Install-Dependencies
     steps:
       - uses: actions/checkout@v3
 
-      - name: workaround for poetry failing to install dependencies
-        run: |
-          sudo apt install gnome-keyring
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
 
       - name: Install Poetry
         run: pip install poetry
@@ -56,11 +54,33 @@ jobs:
           key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
 
       - name: Linters
-        run: poetry run flake8 main.py src
+        run: poetry run ruff check .
+  
+  Formatter:
+    runs-on: ubuntu-latest
+    needs: Install-Dependencies
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install Poetry
+        run: pip install poetry
+
+      - name: Restore poetry venv cache
+        uses: actions/cache@v3
+        with:
+          path: .venv
+          key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
+
+      - name: Formatter
+        run: poetry run ruff format --diff .
 
   CodeQL:
     runs-on: ubuntu-latest
-    needs: [Install-Dependencies, Linters]
+    needs: [Install-Dependencies, Linter, Formatter]
     permissions:
       actions: read
       contents: read
@@ -69,9 +89,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: workaround for poetry failing to install dependencies
-        run: |
-          sudo apt install gnome-keyring
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
 
       - name: Install Poetry
         run: pip install poetry
