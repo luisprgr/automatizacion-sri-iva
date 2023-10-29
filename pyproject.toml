@@ -12,10 +12,20 @@ selenium = "^4.14.0"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.1.1"
+mypy = "^1.6.1"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.mypy]
+warn_return_any = true
+check_untyped_defs = true
+disallow_untyped_defs = true
+disallow_any_unimported = true
+
+warn_unused_ignores = true
+show_error_codes = true
 
 [tool.ruff]
 select = ["ALL"]
