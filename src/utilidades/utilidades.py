@@ -3,11 +3,11 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 
 
-def hover_and_click(driver, button_id):
+def hover_and_click(driver, button_id, by=By.ID):
 
     hover = ActionChains(driver)
 
-    button = driver.find_element(by=By.ID, value=button_id)
+    button = driver.find_element(by=by, value=button_id)
     parent_element = button.find_element(by=By.XPATH, value='./..')
 
     driver.execute_script("arguments[0].scrollIntoView();", parent_element)

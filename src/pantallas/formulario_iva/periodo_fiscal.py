@@ -8,6 +8,15 @@ from selenium.common.exceptions import (
 )
 
 from src.utilidades.utilidades import hover_and_click, guardar_captura
+from src.pantallas.formulario_iva.ids import (
+    OBLIGACION_DROPDOWN_ID,
+    OBLIGACION_DECLARACION_IVA_2011_ELEMENT_ID,
+    DIALOGO_DESCARTABLE_BUTTON_XPATH,
+    DATE_SELECTOR_ID,
+    DATE_ELEMENT_CSS_SELECTOR,
+    PERIODO_FISCAL_SIGUIENTE_BUTTON_ID,
+    DESCARTAR_BORRADOR_BUTTON_XPATH,
+)
 
 
 def seleccionar_periodo_fiscal(
@@ -19,64 +28,65 @@ def seleccionar_periodo_fiscal(
 ):
 
     wait = WebDriverWait(driver, 10)
+
     wait.until(expected.presence_of_element_located(
-        (By.ID, 'frmFlujoDeclaracion:somObligacion_label')))
+        (By.ID, OBLIGACION_DROPDOWN_ID)))
 
     time.sleep(tiempo_espera)
 
-    hover_and_click(driver, 'frmFlujoDeclaracion:somObligacion_label')
+    hover_and_click(driver, OBLIGACION_DROPDOWN_ID)
 
     wait.until(expected.visibility_of_element_located(
-        (By.ID, 'frmFlujoDeclaracion:somObligacion_1')))
+        (By.ID, OBLIGACION_DECLARACION_IVA_2011_ELEMENT_ID)))
 
     declaration_2011 = driver.find_element(
-        by=By.ID, value='frmFlujoDeclaracion:somObligacion_1')
+        by=By.ID, value=OBLIGACION_DECLARACION_IVA_2011_ELEMENT_ID)
+    
     declaration_2011.click()
 
     time.sleep(tiempo_espera)
 
-    wait.until(expected.visibility_of_element_located(
-        (By.XPATH,
-         (
-             "//div[@id='frmFlujoDeclaracion:dialogoMensajesPersonalizados']"
-             "//button[contains(@id, 'frmFlujoDeclaracion')]"
-         ))))
+    try:
+        wait.until(expected.visibility_of_element_located((
+            By.XPATH, DIALOGO_DESCARTABLE_BUTTON_XPATH))
+        )
 
-    rimpe_discard_button = driver.find_element(
-        By.XPATH,
-        ("// div[@id='frmFlujoDeclaracion:dialogoMensajesPersonalizados']"
-         "//button[contains(@id, 'frmFlujoDeclaracion')]"))
-    rimpe_discard_button.click()
+        discard_dialog_button = driver.find_element(
+            By.XPATH,DIALOGO_DESCARTABLE_BUTTON_XPATH)
+        
+        discard_dialog_button.click()
+    except ElementNotInteractableException:
+        pass
 
     wait.until(expected.presence_of_element_located(
-        (By.ID, 'frmFlujoDeclaracion:calPeriodo')))
+        (By.ID, DATE_SELECTOR_ID)))
 
     date_selector = driver.find_element(
-        by=By.ID, value='frmFlujoDeclaracion:calPeriodo')
+        by=By.ID, value=DATE_SELECTOR_ID)
     date_selector.click()
 
     wait.until(expected.presence_of_element_located(
-        (By.CSS_SELECTOR, f'a.button-{month}')))
+        (By.CSS_SELECTOR, DATE_ELEMENT_CSS_SELECTOR.format(month=month))))
 
     last_month_button = driver.find_element(
-        by=By.CSS_SELECTOR, value=f'a.button-{month}')
+        by=By.CSS_SELECTOR, value=DATE_ELEMENT_CSS_SELECTOR.format(month=month))
     last_month_button.click()
 
     wait.until(expected.text_to_be_present_in_element_value(
-        (By.ID, 'frmFlujoDeclaracion:calPeriodo'), f'{month:02d}/{year}'))
+        (By.ID, DATE_SELECTOR_ID), f'{month:02d}/{year}'))
 
     if guardar_capturas:
         guardar_captura(driver, 'seleccion_periodo_fiscal')
 
     next_step_button = driver.find_element(
-        by=By.ID, value='frmFlujoDeclaracion:btnObligacionSiguiente')
+        by=By.ID, value=PERIODO_FISCAL_SIGUIENTE_BUTTON_ID)
     next_step_button.click()
 
     time.sleep(tiempo_espera)
 
     try:
         discard_draft_button = driver.find_element(
-            by=By.XPATH, value="//button/span[contains(text(), 'Rechazar')]")
+            by=By.XPATH, value=DESCARTAR_BORRADOR_BUTTON_XPATH)
         discard_draft_button.click()
     except ElementNotInteractableException:
         pass

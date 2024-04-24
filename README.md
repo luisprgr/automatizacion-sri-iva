@@ -2,9 +2,6 @@
 
 Automatización de declaraciones del IVA en el Servicio de Rentas Internas de Ecuador usando selenium  
 
-:warning: este script actualmente está fallando debido a cambios en el sitio web del SRI. Se va a refactorizar el código con el estilo de manejo de ids de elementos web usado en [automatizacion-sri-facturas](https://github.com/luisprgr/automatizacion-sri-facturas) para hacer mas fácil la actualización de los ids en el futuro.
-
-
 ### Limitaciones actuales:
 - Debe existir un ya una declaración anterior, en la cual se haya llenado el formulario de preguntas.
 - Debido a que esta es una primera versión, el script está limitado a guardar la declaración como un borrador que luego debe ser aceptado manualmente por el usuario en el sitio web del SRI.
