@@ -1,3 +1,4 @@
+import time
 from typing import Dict
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as expected
@@ -9,6 +10,18 @@ from src.utilidades.utilidades import (
     hover_and_click,
     guardar_captura,
     scroll_to_bottom
+)
+from src.pantallas.formulario_iva.ids import (
+    FORMULARIO_CONTENT_XPATH,
+    VENTAS_SECCION_BUTTON_XPATH,
+    VENTAS_SECCION_CONTENT_XPATH,
+    RESUMEN_IMPOSITIVO_SECCION_BUTTON_XPATH,
+    RESUMEN_IMPOSITIVO_SECCION_CONTENT_XPATH,
+    DEVOLUCION_ISD_SECCION_BUTTON_XPATH,
+    DEVOLUCION_ISD_SECCION_CONTENT_XPATH,
+    TOTALES_SECCION_BUTTON_XPATH,
+    TOTALES_SECCION_CONTENT_XPATH,
+    GUARDAR_BORRADOR_BUTTON_XPATH
 )
 
 
@@ -29,8 +42,7 @@ def llenar_formulario(
     wait = WebDriverWait(driver, 10)
 
     wait.until(expected.presence_of_element_located(
-        (By.XPATH,
-         "//div[@id='frmFlujoDeclaracion:pnlFormularioExtendido_content']")))
+        (By.XPATH, FORMULARIO_CONTENT_XPATH)))
 
     formulario_id = driver.find_element(
         By.XPATH,
@@ -41,36 +53,24 @@ def llenar_formulario(
     # Abre todas las secciones
 
     # Sección de ventas
-    hover_and_click(
-        driver, f'frmFlujoDeclaracion:j_idt{formulario_id}:2:seccion')
+    hover_and_click(driver, VENTAS_SECCION_BUTTON_XPATH, by=By.XPATH)
     scroll_to_bottom(driver)
-    wait.until(expected.visibility_of_element_located(
-        (By.ID,
-         f'frmFlujoDeclaracion:j_idt{formulario_id}:2:seccion:seccion-tab')))
+    wait.until(expected.visibility_of_element_located((By.XPATH, VENTAS_SECCION_CONTENT_XPATH)))
 
     # Sección de resumen impositivo
-    hover_and_click(
-        driver, f'frmFlujoDeclaracion:j_idt{formulario_id}:6:seccion')
+    hover_and_click(driver, RESUMEN_IMPOSITIVO_SECCION_BUTTON_XPATH, by= By.XPATH)
     scroll_to_bottom(driver)
-    wait.until(expected.visibility_of_element_located(
-        (By.ID,
-         f'frmFlujoDeclaracion:j_idt{formulario_id}:6:seccion:seccion-tab')))
+    wait.until(expected.visibility_of_element_located((By.XPATH,RESUMEN_IMPOSITIVO_SECCION_CONTENT_XPATH)))
 
     # Sección de devolucion del isd
-    hover_and_click(
-        driver, f'frmFlujoDeclaracion:j_idt{formulario_id}:8:seccion')
+    hover_and_click(driver, DEVOLUCION_ISD_SECCION_BUTTON_XPATH, by=By.XPATH)
     scroll_to_bottom(driver)
-    wait.until(expected.visibility_of_element_located(
-        (By.ID,
-         f'frmFlujoDeclaracion:j_idt{formulario_id}:8:seccion:seccion-tab')))
+    wait.until(expected.visibility_of_element_located((By.XPATH,DEVOLUCION_ISD_SECCION_CONTENT_XPATH)))
 
     # Sección de totales
-    hover_and_click(
-        driver, f'frmFlujoDeclaracion:j_idt{formulario_id}:12:seccion')
+    hover_and_click(driver, TOTALES_SECCION_BUTTON_XPATH, by=By.XPATH)
     scroll_to_bottom(driver)
-    wait.until(expected.visibility_of_element_located(
-        (By.ID,
-         f'frmFlujoDeclaracion:j_idt{formulario_id}:12:seccion:seccion-tab')))
+    wait.until(expected.visibility_of_element_located((By.XPATH,TOTALES_SECCION_CONTENT_XPATH)))
 
     # Llena los campos
 
@@ -104,6 +104,6 @@ def llenar_formulario(
     if borrador:
         save_button = driver.find_element(
             by=By.XPATH,
-            value="//button/span[contains(text(), 'Guardar borrador')]"
+            value=GUARDAR_BORRADOR_BUTTON_XPATH
         )
         save_button.click()
