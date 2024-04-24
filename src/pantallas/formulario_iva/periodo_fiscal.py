@@ -66,10 +66,10 @@ def seleccionar_periodo_fiscal(
     date_selector.click()
 
     wait.until(expected.presence_of_element_located(
-        (By.CSS_SELECTOR, DATE_ELEMENT_CSS_SELECTOR.format(month))))
+        (By.CSS_SELECTOR, DATE_ELEMENT_CSS_SELECTOR.format(month=month))))
 
     last_month_button = driver.find_element(
-        by=By.CSS_SELECTOR, value=DATE_ELEMENT_CSS_SELECTOR.format(month))
+        by=By.CSS_SELECTOR, value=DATE_ELEMENT_CSS_SELECTOR.format(month=month))
     last_month_button.click()
 
     wait.until(expected.text_to_be_present_in_element_value(
