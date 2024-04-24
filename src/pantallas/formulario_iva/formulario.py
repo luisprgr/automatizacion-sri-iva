@@ -44,12 +44,6 @@ def llenar_formulario(
     wait.until(expected.presence_of_element_located(
         (By.XPATH, FORMULARIO_CONTENT_XPATH)))
 
-    formulario_id = driver.find_element(
-        By.XPATH,
-        ("//div[@id='frmFlujoDeclaracion:"
-         "pnlFormularioExtendido_content']/div/div")
-    ).get_attribute('id').split(':')[1].replace('j_idt', '')
-
     # Abre todas las secciones
 
     # Sección de ventas
