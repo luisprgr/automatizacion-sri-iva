@@ -8,7 +8,6 @@ from src.pantallas.formulario_iva.periodo_fiscal import (
 )
 from src.pantallas.formulario_iva.formulario import llenar_formulario
 from src.pantallas.formulario_iva.preguntas import preguntas
-from src.pantallas.comun.logout import logout_sri
 
 
 def declaracion_iva(
@@ -42,8 +41,6 @@ def declaracion_iva(
 
     llenar_formulario(driver, guardar_capturas,
                       tiempo_espera, campos, borrador)
-
-    logout_sri(driver, guardar_capturas)
 
     time.sleep(1)
 
