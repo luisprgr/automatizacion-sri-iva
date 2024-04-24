@@ -32,7 +32,7 @@ def seleccionar_periodo_fiscal(
     wait.until(expected.presence_of_element_located(
         (By.ID, OBLIGACION_DROPDOWN_ID)))
 
-    # time.sleep(tiempo_espera)
+    time.sleep(tiempo_espera)
 
     hover_and_click(driver, OBLIGACION_DROPDOWN_ID)
 
@@ -44,7 +44,7 @@ def seleccionar_periodo_fiscal(
     
     declaration_2011.click()
 
-    # time.sleep(tiempo_espera)
+    time.sleep(tiempo_espera)
 
     try:
         wait.until(expected.visibility_of_element_located((
