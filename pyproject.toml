@@ -5,6 +5,7 @@ description = "App para automatizar la declaración del iva en el sri usando sel
 authors = ["luisprgr"]
 license = "MIT"
 readme = "README.md"
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.12"
