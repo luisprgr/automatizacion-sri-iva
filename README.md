@@ -9,7 +9,7 @@ Automatización de declaraciones del IVA en el Servicio de Rentas Internas de Ec
 ### Requerimientos:
 
 - Python 3.12 o superior
-- Poetry 1.2.2 o superior
+- Poetry 1.8.3 o superior
 - Firefox
 
 ### Instalación:
