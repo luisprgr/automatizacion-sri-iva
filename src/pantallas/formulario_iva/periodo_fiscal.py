@@ -4,7 +4,8 @@ from selenium.webdriver.support import expected_conditions as expected
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import (
     ElementNotInteractableException,
-    NoSuchElementException
+    NoSuchElementException,
+    TimeoutException,
 )
 
 from src.utilidades.utilidades import hover_and_click, guardar_captura
@@ -56,6 +57,8 @@ def seleccionar_periodo_fiscal(
         
         discard_dialog_button.click()
     except ElementNotInteractableException:
+        pass
+    except TimeoutException:
         pass
 
     wait.until(expected.presence_of_element_located(
