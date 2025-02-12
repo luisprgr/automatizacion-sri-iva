@@ -1,38 +1,34 @@
-[tool.poetry]
+[project]
 name = "automatizacion-sri-iva"
-version = "0.1.0"
-description = "App para automatizar la declaración del iva en el sri usando selenium"
-authors = ["luisprgr"]
-license = "MIT"
+version = "0.2.0"
+authors = [{ name = "luisprgr" }]
+description = "App para automatizar la declaración del IVA en el SRI usando selenium"
 readme = "README.md"
-package-mode = false
+license = "MIT"
 
-[tool.poetry.dependencies]
-python = "^3.12"
-selenium = "^4.22.0"
-
-[tool.poetry.group.dev.dependencies]
-ruff = "^0.4.10"
-mypy = "^1.10.0"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires-python = ">=3.13"
+dependencies = [
+    "selenium>=4.28.1",
+]
+[dependency-groups]
+dev = [
+    "mypy>=1.15.0",
+    "ruff>=0.9.6",
+]
 
 [tool.mypy]
 warn_return_any = true
 check_untyped_defs = true
 disallow_untyped_defs = true
 disallow_any_unimported = true
-
 warn_unused_ignores = true
 show_error_codes = true
 
 [tool.ruff]
 select = ["ALL"]
-
 fixable = ["ALL"]
 unfixable = []
-
 line-length = 90
-target-version = "py312"
+target-version = "py313"
+format.quote-style = "double"
+format.indent-style = "space"
