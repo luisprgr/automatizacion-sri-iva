@@ -14,91 +14,91 @@ jobs:
   Install-Dependencies:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.12' 
+          python-version: '3.13'
 
-      - name: Install Poetry
-        run: pip install poetry
+      - name: Install uv
+        run: pip install uv
 
-      - name: Restore poetry venv cache
+      - name: Restore uv venv cache
         id: dependencies-cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: .venv
-          key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
+          key: ${{ runner.os }}-uv-${{ hashFiles('uv.lock') }}
 
       - name: Install dependencies
         if: steps.dependencies-cache.outputs.cache-hit != 'true'
-        run: poetry install
+        run: uv sync
 
   Linter:
     runs-on: ubuntu-latest
     needs: Install-Dependencies
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.13'
 
-      - name: Install Poetry
-        run: pip install poetry
+      - name: Install uv
+        run: pip install uv
 
-      - name: Restore poetry venv cache
-        uses: actions/cache@v3
+      - name: Restore uv venv cache
+        uses: actions/cache@v4
         with:
           path: .venv
-          key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
+          key: ${{ runner.os }}-uv-${{ hashFiles('uv.lock') }}
 
       - name: Linters
-        run: poetry run ruff check .
+        run: uv run ruff check .
   
   Formatter:
     runs-on: ubuntu-latest
     needs: Install-Dependencies
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.13'
 
-      - name: Install Poetry
-        run: pip install poetry
+      - name: Install uv
+        run: pip install uv
 
-      - name: Restore poetry venv cache
-        uses: actions/cache@v3
+      - name: Restore uv venv cache
+        uses: actions/cache@v4
         with:
           path: .venv
-          key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
+          key: ${{ runner.os }}-uv-${{ hashFiles('uv.lock') }}
 
       - name: Formatter
-        run: poetry run ruff format --diff .
+        run: uv run ruff format --diff .
 
   Static-Type-Checker:
     runs-on: ubuntu-latest
     needs: [Install-Dependencies, Linter, Formatter]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.13'
 
-      - name: Install Poetry
-        run: pip install poetry
+      - name: Install uv
+        run: pip install uv
 
-      - name: Restore poetry venv cache
-        uses: actions/cache@v3
+      - name: Restore uv venv cache
+        uses: actions/cache@v4
         with:
           path: .venv
-          key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
+          key: ${{ runner.os }}-uv-${{ hashFiles('uv.lock') }}
 
       - name: Formatter
-        run: poetry run mypy .
+        run: uv run mypy .
 
   CodeQL:
     runs-on: ubuntu-latest
@@ -109,20 +109,20 @@ jobs:
       security-events: write
     
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.13'
 
-      - name: Install Poetry
-        run: pip install poetry
+      - name: Install uv
+        run: pip install uv
 
-      - name: Restore poetry venv cache
-        uses: actions/cache@v3
+      - name: Restore uv venv cache
+        uses: actions/cache@v4
         with:
           path: .venv
-          key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
+          key: ${{ runner.os }}-uv-${{ hashFiles('uv.lock') }}
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
