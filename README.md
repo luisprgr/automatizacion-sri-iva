@@ -48,7 +48,7 @@ Automatización de la declaración del IVA en el Servicio de Rentas Internas (SR
     Activamos el entorno virtual (en macOS/Linux):
 
     ```bash
-    source venv/bin/activate
+    source .venv/bin/activate
     ```
 
     Finalmente, instalamos las dependencias con:
