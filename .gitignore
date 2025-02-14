@@ -8,3 +8,5 @@ geckodriver.log
 datos.json
 __pycache__/
 .ruff_cache/
+src/automatizacion_sri_iva.egg-info
+build/
