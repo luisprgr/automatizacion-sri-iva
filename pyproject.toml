@@ -4,7 +4,7 @@ version = "0.2.0"
 authors = [{ name = "luisprgr" }]
 description = "App para automatizar la declaración del IVA en el SRI usando selenium"
 readme = "README.md"
-license = "MIT"
+license = { text = "MIT"}
 
 requires-python = ">=3.13"
 dependencies = [
