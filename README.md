@@ -1,65 +1,122 @@
 # Automatización-sri-iva
 
-Automatización de declaraciones del IVA en el Servicio de Rentas Internas de Ecuador usando selenium  
+Automatización de la declaración del IVA en el Servicio de Rentas Internas (SRI) de Ecuador usando selenium  
 
 ### Limitaciones actuales:
-- Debe existir un ya una declaración anterior, en la cual se haya llenado el formulario de preguntas.
-- Debido a que esta es una primera versión, el script está limitado a guardar la declaración como un borrador que luego debe ser aceptado manualmente por el usuario en el sitio web del SRI.
+- Actualmente no se cambian valores del formulario de preguntas, solo se llenan los valores de la declaración.
+- El script se limita a guardar la declaración como un borrador una vez que esta ha sido completada. El usuario debe acceder al portal del SRI para revisarla y enviarla manualmente.
 
 ### Requerimientos:
 
-- Python 3.12 o superior
-- Poetry 1.8.3 o superior
+- Python 3.13 o superior
 - Firefox
+
+### Requerimientos opcionales: 
+
+- [uv](https://docs.astral.sh/uv/) 
 
 ### Instalación:
 
 1. Clonar el repositorio
 
-```bash
-git clone https://github.com/luisprgr/automatizacion-sri-iva.git
-```
+    ```bash
+    git clone https://github.com/luisprgr/automatizacion-sri-iva.git
+    ```
 
 2. Instalar dependencias
 
-```bash
-poetry install
-```
+    ##### Si `uv` está instalado:
+
+    ```bash
+    uv sync
+    ```
+
+    ##### O mediante `venv` + `pip`:
+
+    Creamos un entorno virtual
+    
+    ```bash
+    python -m venv .venv
+    ```
+
+    Activamos el entorno virtual (en Windows):
+
+    ```Powershell
+    .venv\Scripts\activate
+    ```
+
+    Activamos el entorno virtual (en macOS/Linux):
+
+    ```bash
+    source venv/bin/activate
+    ```
+
+    Finalmente, instalamos las dependencias con:
+    ```bash
+    pip install .
+    ````
+
 
 3. Crear archivo con los datos para la declaración
 
-```bash
-cp datos.json.example datos.json
-```
+    ```bash
+    cp datos.json.example datos.json
+    ```
 
 4. Editar el archivo `datos.json` con los datos de la declaración
 
 ### Ejecución:
 
-- Ejecutar el script con su configuración de python por defecto mostrando el navegador y los pasos que está realizando
+- Ejecutar el script con su configuración por defecto (muestra las acciones que se realizan el navegador):
+
+    Con uv:
 
     ```bash
-    poetry run python main.py
+    uv run main.py
     ```
 
-- Ejecutar el script en modo headless
+    O ejecutando dentro del entorno virtual creado anteriormente:
 
     ```bash
-    poetry run python main.py --headless
+    python3 main.py
     ```
 
-- Guardar capturas de pantalla de los pasos que realiza el script
+- Ejecutar el script en modo headless:
 
     ```bash
-    poetry run python main.py --guardar-capturas
+    uv run main.py --headless
+    ```
+
+    O 
+
+    ```bash
+    python3 main.py --headless
+    ```
+
+- Guardar capturas de pantalla de las acciones realizadas por el script
+
+    ```bash
+    uv run main.py --guardar-capturas
+    ```
+
+    O 
+
+    ```bash
+    python3 main.py --guardar-capturas
     ```
     
-    (este comando guarda las capturas en la carpeta `capturas` y puede ser combinado con el modo normal o headless)
+    (este comando guarda las capturas de pantalla en una carpeta llamada `capturas` y puede ser combinado con el modo normal o headless)
 
 - Ver la ayuda del script
 
     ```bash
-    poetry run python main.py --help
+    uv run main.py --help
+    ```
+
+    O 
+
+    ```bash
+    python3 main.py --help
     ```
 
 ### Licencia
